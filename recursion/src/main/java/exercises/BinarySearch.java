@@ -3,7 +3,7 @@ package exercises;
 /**
  * Binary Search (Recursive) on a sorted array.
  *
- * ALGORITHM (explain to students):
+ * ALGORITHM:
  * - Precondition: the array is sorted in non-decreasing order.
  * - Idea: Compare target with the middle element:
  *     * If target == midVal -> found (return index).
@@ -21,7 +21,7 @@ package exercises;
  *
  * COMPLEXITY:
  * - Time: O(log n)
- * - Space: O(log n) due to recursion depth (or O(1) if you write it iteratively)
+ * - Space: O(log n) due to recursion depth
  */
 public class BinarySearch {
 
@@ -33,16 +33,35 @@ public class BinarySearch {
         return search(a, target, 0, a.length - 1);
     }
 
-    // TODO: Implement recursively. DO NOT convert to a loop.
+    // Recursive helper method
     private static int search(int[] a, int target, int lo, int hi) {
         // Base case 1: empty range
+        if (lo > hi) {
+            return -1;
+        }
+
+        int mid = lo + (hi - lo) / 2;
+
         // Base case 2: found at mid
-        // Recursive case: pick left or right half
-        // Hints:
-        //   int mid = lo + (hi - lo) / 2;
-        //   if (target < a[mid]) return search(a, target, lo, mid - 1);
-        //   else if (target > a[mid]) return search(a, target, mid + 1, hi);
-        //   else return mid;
-        return -2; // TEMP: replace with your recursive solution
+        if (a[mid] == target) {
+            return mid;
+        }
+
+        // Recursive cases
+        if (target < a[mid]) {
+            return search(a, target, lo, mid - 1);
+        } else {
+            return search(a, target, mid + 1, hi);
+        }
+    }
+
+    // Optional test method
+    public static void main(String[] args) {
+        int[] arr = {1, 3, 5, 7, 9, 11, 13};
+
+        System.out.println(binarySearch(arr, 7));  // Output: 3
+        System.out.println(binarySearch(arr, 1));  // Output: 0
+        System.out.println(binarySearch(arr, 13)); // Output: 6
+        System.out.println(binarySearch(arr, 8));  // Output: -1 (not found)
     }
 }
